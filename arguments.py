@@ -20,8 +20,8 @@ def get_args():
     # training 
     parser.add_argument('--seed', type=int, default=None, help='random seed (default: None)')
     parser.add_argument('--num-processes', type=int, default=1, help='how many training CPU processes to use (default: 32)')
-    parser.add_argument('--num-steps', type=int, default=1000, help='number of forward steps in PPO (default: 128)')   # data collection steps in PPO
-    parser.add_argument('--num-env-steps', type=int, default=1000000, help='number of forward steps in PPO (default: 128)')   # after how many steps environment resets
+    parser.add_argument('--num-steps', type=int, default=1000000, help='number of forward steps in PPO (default: 128)')   # data collection steps in PPO
+    parser.add_argument('--num-env-steps', type=int, default=100, help='number of forward steps in PPO (default: 128)')   # after how many steps environment resets
     parser.add_argument('--no-cuda', action='store_true', default=False, help='disables CUDA training')
     parser.add_argument('--num-frames', type=int, default=int(50e6), help='number of frames to train (default: 5e3)')
     parser.add_argument('--arena-size', type=int, default=1, help='size of arena')
