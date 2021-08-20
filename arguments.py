@@ -89,6 +89,7 @@ def get_args():
         if args.pretrained_guard:
             print('loading pretrained guards')
             args.guard_load_dir = './marlsave/'+'tmp_2'+'/ep'+str(5050)+'.pt'
+            args.load_dir = './marlsave/'+'tmp_2'+'/ep'+str(5050)+'.pt'
 
     if args.continue_training:
         print(args.load_dir)
