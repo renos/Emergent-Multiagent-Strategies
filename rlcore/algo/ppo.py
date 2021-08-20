@@ -117,6 +117,10 @@ class JointPPO():
         # rollouts_list - list of rollouts of agents which share self.actor_critic policy
         # print('rollouts_list', rollouts_list, 'ppo.py')
         # print('opp_rollouts_list', opp_rollouts_list, 'ppo.py')
+        print("reached here")
+        rollouts_list.save("rollouts_list")
+        opp_rollouts_list.save("opp_rollouts_list")
+
         advantages_list = []
         for rollout in rollouts_list:
             advantages = rollout.returns[:-1] - rollout.value_preds[:-1]
@@ -126,7 +130,7 @@ class JointPPO():
         value_loss_epoch = 0
         action_loss_epoch = 0
         dist_entropy_epoch = 0
-        print("reached here")
+
         exit()
 
         for e in range(self.ppo_epoch):
