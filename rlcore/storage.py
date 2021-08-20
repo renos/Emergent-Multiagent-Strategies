@@ -54,6 +54,7 @@ class RolloutStorage(object):
         to_save = {"obs_np": obs_np, "recurrent_hidden_states": recurrent_hidden_states, "rewards": rewards,
                    "value_preds": value_preds, "returns": returns, "action_log_probs": action_log_probs,
                    "actions": actions, "masks": masks, "num_steps": num_steps}
+        with open('marlsave/to_save_'+ to_name +'_100.pkl', 'wb') as file:
             # A new file will be created
             pickle.dump(to_save, file)
 
