@@ -11,6 +11,8 @@ from pyglet.gl import *
 import copy
 import cv2
 
+os.environ["SDL_AUDIODRIVER"] = "dummy"
+
 # environment for all agents in the multiagent world
 # currently code assumes that no agents will be created/destroyed at runtime!
 
