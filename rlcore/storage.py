@@ -47,18 +47,18 @@ class RolloutStorage(object):
         self.just_died[self.step+1].copy_(record_just_died)
         self.step = (self.step + 1) % self.num_steps
     def save(self):
-        obs_np = self.obs.detach().cpu().numpy()
-        recurrent_hidden_states = self.recurrent_hidden_states.detach().cpu().numpy()
-        rewards = self.rewards.detach().cpu().numpy()
-        value_preds = self.value_preds.detach().cpu().numpy()
-        returns = self.returns.detach().cpu().numpy()
-        action_log_probs = self.action_log_probs.detach().cpu().numpy()
-        actions = self.actions.detach().cpu().numpy()
-        masks = self.masks.detach().cpu().numpy()
+        obs_np = self.obs.detach().cpu()
+        recurrent_hidden_states = self.recurrent_hidden_states.detach().cpu()
+        rewards = self.rewards.detach().cpu()
+        value_preds = self.value_preds.detach().cpu()
+        returns = self.returns.detach().cpu()
+        action_log_probs = self.action_log_probs.detach().cpu()
+        actions = self.actions.detach().cpu()
+        masks = self.masks.detach().cpu()
         num_steps = self.num_steps
-        current_attacker = self.current_attacker.detach().cpu().numpy()
-        episode_finished = self.episode_finished.detach().cpu().numpy()
-        just_died = self.just_died.detach().cpu().numpy()
+        current_attacker = self.current_attacker.detach().cpu()
+        episode_finished = self.episode_finished.detach().cpu()
+        just_died = self.just_died.detach().cpu()
         to_save = {"obs_np": obs_np, "recurrent_hidden_states": recurrent_hidden_states, "rewards": rewards,
                    "value_preds": value_preds, "returns": returns, "action_log_probs": action_log_probs,
                    "actions": actions, "masks": masks, "num_steps": num_steps, "current_attacker": current_attacker,
