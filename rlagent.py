@@ -30,8 +30,8 @@ class Neo(object):
     self.rollouts.obs[step].copy_(obs)
     self.rollouts.masks[step].copy_(masks)
 
-  def update_rollout(self, obs, reward, mask):
-    self.rollouts.insert(obs, self.states, self.action, self.action_log_prob, self.value, reward, mask)
+  def update_rollout(self, obs, reward, mask, done, record_just_died, chosen_attacker):
+    self.rollouts.insert(obs, self.states, self.action, self.action_log_prob, self.value, reward, mask, done, record_just_died, chosen_attacker)
 
   def act(self, step, deterministic=False):
     self.value, self.action, self.action_log_prob, self.states = self.actor_critic.act(self.rollouts.obs[step],

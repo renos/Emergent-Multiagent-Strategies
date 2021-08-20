@@ -32,7 +32,7 @@ def train(args, policies_list, return_early=False):
         master.load_models(policies_list)
 
     if args.train_guards_only:
-        master.sample_attacker()
+        chosen_attacker = master.sample_attacker()
 
     n = len(master.all_agents)
     # final_rewards = torch.zeros([args.num_processes, n], device=args.device)
@@ -61,6 +61,12 @@ def train(args, policies_list, return_early=False):
                 actions_list, attn_list = master.act(step, masks) ## IMPORTANT
             agent_actions = np.array(actions_list).reshape(-1)
             obs, reward, done, info = env.step(agent_actions)
+
+            record_just_died = [0 for _ in range(len(env.world.agents))]
+
+            for i,entity in list(enumerate(env.world.attackers)):
+                if(entity.justDied):
+                    record_just_died[i+5] = 1
             
             # print('reward')
             # print(reward)
@@ -88,7 +94,7 @@ def train(args, policies_list, return_early=False):
             # print('episode_rewards')
             # print(episode_rewards)
             # final_rewards *= masks
-            master.update_rollout(obs, reward, masks)   ## adds the data point to the rolloutstorage
+            master.update_rollout(obs, reward, masks, torch.tensor(int(done)), torch.tensor(record_just_died), torch.tensor(chosen_attacker))   ## adds the data point to the rolloutstorage
             episode_rewards += reward*masks
             # print('step reward', reward)
             # print('done', done)
@@ -108,7 +114,7 @@ def train(args, policies_list, return_early=False):
 
                 master.initialize_new_episode(step, obs, masks)
                 if args.train_guards_only:
-                    master.sample_attacker()    # choose a one pre-trained attacker policy
+                    chosen_attacker = master.sample_attacker()    # choose a one pre-trained attacker policy
                 # break
         
         # print('')

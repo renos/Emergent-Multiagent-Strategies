@@ -117,7 +117,8 @@ class Learner(object):
             agent.rollouts.to(self.device)
 
     def sample_attacker(self):
-        ckpt = np.random.choice(self.attacker_ckpts)
+        ckpt_int = np.random.choice(list(range(len(self.attacker_ckpts))))
+        ckpt = self.attacker_ckpts[ckpt_int]
         self.select_attacker(ckpt)
         # path = self.attacker_load_dir + '/ep' + str(ckpt)+'.pt'
         # checkpoint = torch.load(path, map_location=lambda storage, loc: storage)
@@ -127,6 +128,7 @@ class Learner(object):
         # for agent, policy in zip(attacker_list, policies_list[numGuards:]):
         #     agent.load_model(policy)
         # print('sampled attacker ckpt', ckpt, 'learner.py')
+        return ckpt_int
 
     def select_attacker(self, ckpt): # select specific attacker strategy
         path = self.attacker_load_dir + '/ep' + str(ckpt)+'.pt'
@@ -236,11 +238,11 @@ class Learner(object):
             agent.after_update()
 
     ## adds current observations to the storage
-    def update_rollout(self, obs, reward, masks):
+    def update_rollout(self, obs, reward, masks, done, record_just_died, chosen_attacker):
         obs_t = torch.from_numpy(obs).float().to(self.device)
         for i, agent in enumerate(self.all_agents):
             agent_obs = obs_t[i, :]
-            agent.update_rollout(agent_obs, reward[i], masks[i])
+            agent.update_rollout(agent_obs, reward[i], masks[i], done, record_just_died[i], chosen_attacker)
 
     def load_models(self, policies_list):
         # for agent, policy in zip(self.all_agents, policies_list):

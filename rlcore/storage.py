@@ -19,6 +19,9 @@ class RolloutStorage(object):
         self.masks = torch.ones(num_steps + 1, num_processes, 1)
         self.num_steps = num_steps         
         self.step = 0
+        self.current_attacker = torch.zeros(num_steps + 1, 1)
+        self.episode_finished = torch.zeros(num_steps + 1, 1)
+        self.just_died = torch.zeros(num_steps + 1, 1)
 
     def to(self, device):
         self.obs = self.obs.to(device)
@@ -30,7 +33,7 @@ class RolloutStorage(object):
         self.actions = self.actions.to(device)
         self.masks = self.masks.to(device)
 
-    def insert(self, obs, recurrent_hidden_states, actions, action_log_probs, value_preds, rewards, masks):
+    def insert(self, obs, recurrent_hidden_states, actions, action_log_probs, value_preds, rewards, masks, done, record_just_died, chosen_attacker):
         # print('self.step', self.step, 'storage.py')
         self.obs[self.step + 1].copy_(obs)
         self.recurrent_hidden_states[self.step + 1].copy_(recurrent_hidden_states)
@@ -39,7 +42,9 @@ class RolloutStorage(object):
         self.value_preds[self.step].copy_(value_preds)
         self.rewards[self.step].copy_(rewards)
         self.masks[self.step + 1].copy_(masks)
-
+        self.current_attacker[self.step+1].copy_(chosen_attacker)
+        self.episode_finished[self.step+1].copy_(done)
+        self.just_died[self.step+1].copy_(record_just_died)
         self.step = (self.step + 1) % self.num_steps
     def save(self):
         obs_np = self.obs.detach().cpu()
