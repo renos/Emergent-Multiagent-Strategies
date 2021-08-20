@@ -41,7 +41,7 @@ class RolloutStorage(object):
         self.masks[self.step + 1].copy_(masks)
 
         self.step = (self.step + 1) % self.num_steps
-    def save(self, to_name):
+    def save(self):
         obs_np = self.obs.detach().cpu()
         recurrent_hidden_states = self.recurrent_hidden_states.detach().cpu()
         rewards = self.rewards.detach().cpu()
@@ -54,9 +54,7 @@ class RolloutStorage(object):
         to_save = {"obs_np": obs_np, "recurrent_hidden_states": recurrent_hidden_states, "rewards": rewards,
                    "value_preds": value_preds, "returns": returns, "action_log_probs": action_log_probs,
                    "actions": actions, "masks": masks, "num_steps": num_steps}
-        with open('marlsave/to_save_'+ to_name +'_100.pkl', 'wb') as file:
-            # A new file will be created
-            pickle.dump(to_save, file)
+        return to_save
 
     # def before_update(self):
     #     self.obs = self.obs[:self.step]

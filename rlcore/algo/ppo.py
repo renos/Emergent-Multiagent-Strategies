@@ -118,8 +118,13 @@ class JointPPO():
         # print('rollouts_list', rollouts_list, 'ppo.py')
         # print('opp_rollouts_list', opp_rollouts_list, 'ppo.py')
         print("reached here")
-        rollouts_list.save("rollouts_list")
-        opp_rollouts_list.save("opp_rollouts_list")
+        save_rollouts_list = [rollout.save() for rollout in rollouts_list]
+        save_opp_rollouts_list = [rollout.save() for rollout in opp_rollouts_list]
+
+        with open('marlsave/save_rollouts_list10.pkl','wb') as f:
+            pickle.dump(save_rollouts_list, f)
+        with open('marlsave/save_opp_rollouts_list10.pkl','wb') as f:
+            pickle.dump(save_opp_rollouts_list, f)
 
         advantages_list = []
         for rollout in rollouts_list:
