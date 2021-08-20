@@ -91,6 +91,7 @@ def get_args():
             args.guard_load_dir = './marlsave/'+'tmp_2'+'/ep'+str(5050)+'.pt'
 
     if args.continue_training:
+        print(args.load_dir)
         assert args.load_dir is not None and os.path.exists(args.load_dir), \
         "Please specify valid model file to load if you want to continue training"
 
