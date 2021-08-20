@@ -57,7 +57,7 @@ class RolloutStorage(object):
         masks = self.masks.detach().cpu()
         num_steps = self.num_steps
         current_attacker = self.current_attacker.detach().cpu()
-        episode_finished = self.episode_finished.detach.cpu()
+        episode_finished = self.episode_finished.detach().cpu()
         just_died = self.just_died.detach().cpu()
         to_save = {"obs_np": obs_np, "recurrent_hidden_states": recurrent_hidden_states, "rewards": rewards,
                    "value_preds": value_preds, "returns": returns, "action_log_probs": action_log_probs,
