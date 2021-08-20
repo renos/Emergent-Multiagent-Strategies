@@ -56,7 +56,7 @@ def train(args, policies_list, return_early=False):
             masks = torch.FloatTensor(obs[:,0])		##* check the values of masks, agent alive or dead
             if not args.no_cuda:
                 masks = masks.cuda()
-           
+            
             with torch.no_grad():
                 actions_list, attn_list = master.act(step, masks) ## IMPORTANT
             agent_actions = np.array(actions_list).reshape(-1)

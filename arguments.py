@@ -88,7 +88,7 @@ def get_args():
         args.attacker_load_dir = './marlsave/'+args.attacker_load_dir
         if args.pretrained_guard:
             print('loading pretrained guards')
-            args.guard_load_dir = './marlsave/'+args.guard_load_dir+'/ep'+str(args.guard_ckpt)+'.pt'
+            args.guard_load_dir = './marlsave/'+'tmp_2'+'/ep'+str(5050)+'.pt'
 
     if args.continue_training:
         assert args.load_dir is not None and os.path.exists(args.load_dir), \
