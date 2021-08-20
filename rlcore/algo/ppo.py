@@ -126,6 +126,8 @@ class JointPPO():
         value_loss_epoch = 0
         action_loss_epoch = 0
         dist_entropy_epoch = 0
+        print("reached here")
+        exit()
 
         for e in range(self.ppo_epoch):
             if self.actor_critic.is_recurrent:
